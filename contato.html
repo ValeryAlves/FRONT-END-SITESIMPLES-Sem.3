@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contato</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .main-content {
+            text-align: center;
+        }
+        .form-container {
+            display: flex; 
+            justify-content: center; 
+            align-items: center; 
+            height: 100%;
+        }
+        form {
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            justify-content: center; 
+            align-items: center; 
+        
+        }
+        input[type="submit"], input[type="reset"] {
+            margin: 10px 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <br>
+            <br>
+            <br>
+            <nav>
+                <ul>
+                    <li><a href="index.html">Principal</a></li>
+                    <li><a href="https://www.google.com" target="_blank">Google</a></li>
+                    <li><a href="https://ifmt.edu.br/" target="_blank">IFMT</a></li>
+                    <li><a href="sobre.html">Sobre</a></li>
+                    <li><a href="contato.html">Contato</a></li>
+                </ul>
+            </nav>
+        </aside>
+        <div class="main-content">
+            <header>
+                <h1>Meu Web Site</h1>
+            </header>
+            <main>
+                <h2 >Formulário de Contato</h2>
+                <div class="form-container">
+                    <form id="formulario" action="cadastro.php" method="post" target="_blank" onsubmit="return validarFormulario()">
+                        <label for="nome">Nome:</label><br>
+                        <input type="text" id="nome" name="nome" placeholder="Digite seu Nome" required autofocus><br><br>
+
+                        <label for="email">Email:</label><br>
+                        <input type="email" id="email" name="email" placeholder="Digite seu E-mail" required><br><br>
+
+                        <label for="cpf">CPF:</label><br>
+                        <input type="text" id="cpf" name="cpf" maxlength="11" placeholder="Digite seu CPF" required><br><br>
+
+                        <label for="dataNascimento">Data de Nascimento:</label><br>
+                        <input type="date" id="dataNascimento" name="dataNascimento" required><br><br>
+
+                        <label>Sexo:</label><br>
+                        <input type="radio" id="masculino" name="sexo" value="Masculino" required>
+                        <label for="masculino">Masculino</label><br>
+                        <input type="radio" id="feminino" name="sexo" value="Feminino" required>
+                        <label for="feminino">Feminino</label><br><br>
+
+                        <label for="telefone">Telefone:</label><br>
+                        <input type="text" id="telefone" name="telefone" maxlength="11" placeholder="Digite seu Telefone" required><br><br>
+
+                        <input type="submit" value="Enviar">
+                        <input type="reset" value="Cancelar">
+                    </form>
+                </div>
+                <div id="dadosEnviados" class="dados-coletados" style="display: none;">
+                    <h3>Dados coletados:</h3>
+                    <p><strong>Nome:</strong> <span id="mostrarNome"></span></p>
+                    <p><strong>Email:</strong> <span id="mostrarEmail"></span></p>
+                    <p><strong>CPF:</strong> <span id="mostrarCPF"></span></p>
+                    <p><strong>Data de Nascimento:</strong> <span id="mostrarDataNascimento"></span></p>
+                    <p><strong>Sexo:</strong> <span id="mostrarSexo"></span></p>
+                    <p><strong>Telefone:</strong> <span id="mostrarTelefone"></span></p>
+                </div>
+            </main>
+            <footer>
+                <p>2024 - Meu Web Site - Tel.: (65) 99999-9999 - Todos os direitos reservados</p>
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        function validarFormulario() {
+            var nome = document.getElementById('nome').value;
+            if (nome.length < 3 || nome.length > 100) {
+                alert('Nome deve ter entre 3 e 100 caracteres.');
+                return false;
+            }
+
+            var email = document.getElementById('email').value;
+            if (email.length < 11 || email.length > 100) {
+                alert('Email deve ter entre 11 e 100 caracteres.');
+                return false;
+            }
+
+            var cpf = document.getElementById('cpf').value;
+            if (cpf.length !== 11 || !validarCPF(cpf)) {
+                alert('CPF inválido.');
+                return false;
+            }
+
+            var masculino = document.getElementById('masculino').checked;
+            var feminino = document.getElementById('feminino').checked;
+            if (!masculino && !feminino) {
+                alert('Selecione o sexo.');
+                return false;
+            }
+
+            var telefone = document.getElementById('telefone').value;
+            if (telefone.length !== 11) {
+                alert('Telefone deve ter 11 caracteres.');
+                return false;
+            }
+
+            return true;
+        }
+
+        function exibirDados() {
+            var nome = document.getElementById('nome').value;
+            var email = document.getElementById('email').value;
+            var cpf = document.getElementById('cpf').value;
+            var dataNascimento = document.getElementById('dataNascimento').value;
+            var sexo = document.getElementById('masculino').checked ? 'Masculino' : 'Feminino';
+            var telefone = document.getElementById('telefone').value;
+
+            document.getElementById('mostrarNome').textContent = nome;
+            document.getElementById('mostrarEmail').textContent = email;
+            document.getElementById('mostrarCPF').textContent = cpf;
+            document.getElementById('mostrarDataNascimento').textContent = dataNascimento;
+            document.getElementById('mostrarSexo').textContent = sexo;
+            document.getElementById('mostrarTelefone').textContent = telefone;
+
+            document.getElementById('dadosEnviados').style.display = 'block';
+        }
+
+        function validarCPF(cpf) {
+            cpf = cpf.replace(/[^\d]+/g, '');
+            if (cpf == '') return false;
+            if (cpf.length != 11 ||
+                cpf == "00000000000" ||
+                cpf == "11111111111" ||
+                cpf == "22222222222" ||
+                cpf == "33333333333" ||
+                cpf == "44444444444" ||
+                cpf == "55555555555" ||
+                cpf == "66666666666" ||
+                cpf == "77777777777" ||
+                cpf == "88888888888" ||
+                cpf == "99999999999")
+                return false;
+            var add = 0;
+            for (var i = 0; i < 9; i++)
+                add += parseInt(cpf.charAt(i)) * (10 - i);
+            var rev = 11 - (add % 11);
+            if (rev == 10 || rev == 11)
+                rev = 0;
+            if (rev != parseInt(cpf.charAt(9)))
+                return false;
+            add = 0;
+            for (var i = 0; i < 10; i++)
+                add += parseInt(cpf.charAt(i)) * (11 - i);
+            rev = 11 - (add % 11);
+            if (rev == 10 || rev == 11)
+                rev = 0;
+            if (rev != parseInt(cpf.charAt(10)))
+                return false;
+            return true;
+        }
+    </script>
+</body>
+</html>
